@@ -22,4 +22,5 @@
  * CSS styling (NES CSS?)
  * sound effects
  * weighted scoring (more points for more difficult questions)
+ * user can request multiple question categories from API
 
