@@ -9,11 +9,6 @@
   * visitor can edit or remove questions on any game
     * editing a game resets attempts, high score, and average score (obvs.)
 
-# sooo extra
- * CSS styling (NES CSS?)
- * sound effects
- * weighted scoring (more points for more difficult questions)
- 
 * backend on Rails
   * Model: Game has title, high score, average score, number of attempts, has_many Questions
   * Model: Question has content, correct answer, incorrect answer(s), belongs_to Game
@@ -22,3 +17,9 @@
   * a form for a new game will have a title, number of questions, and the visitor will be able to add as many question/answer fields they want up to the question limit they select.
      * if the number of questions they add is less than the number of questions they want to have, the Opentdb API is queried
       * visitor will be able to limit the questions by category (checkboxes), difficulty (also checkboxes) or type (true/false or multiple choice) (also checkboxes)
+
+# sooo extra
+ * CSS styling (NES CSS?)
+ * sound effects
+ * weighted scoring (more points for more difficult questions)
+ 
