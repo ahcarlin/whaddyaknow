@@ -21,7 +21,7 @@ class Api::V1::GamesController < ApplicationController
 
   def destroy
     current_game.destroy
-    render json: game
+    render json: Game.all
   end
 
   def game_params
