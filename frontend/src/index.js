@@ -4,6 +4,7 @@ const server = ajax('http://localhost:3000/api/v1')
 
 let games = []
 let selectedGame = {questions: []}
+console.log(selectedGame)
 
 let selectedView = 'games' // changed for testing
 
@@ -54,6 +55,8 @@ const renderGameForm = () => {
         selectedGame.title = document.getElementById('title').value
         selectedGame.numQuests = document.getElementById('numOfQuestions').value
         selectedGame.category = document.getElementById('categoryQuestions').value
+        selectedGame.high_score = 0
+        selectedGame.questions = []
         renderQuestionForm(1,selectedGame.numQuests)
     })
     submit.setAttribute('class','btn')
@@ -120,6 +123,7 @@ const renderQuestionForm = (index, numQuests) => {
 
 const renderGamesList = function() {
   titleBox.innerHTML = "<h2><i class='icon star is-medium'></i> All Games</h2>"
+
     return renderList(
         ...games.map( function(currentGame){
             return renderListItem(currentGame.title, function(){
@@ -132,7 +136,8 @@ const renderGamesList = function() {
                     })
            })
         }),
-        renderButton('+ Add A Game', function(){
+
+        renderButton('Add Game', function(){
             update(function(){
                 selectedGame = {
                     title: ''
@@ -169,20 +174,28 @@ const renderSelectedGame = function(){
             selectedView = 'play-game'
           })
         }),
-        renderButton('Edit', function(){
-          update(function(){
-            selectedView = 'game-form'
-          })
-        }),
-        renderButton('Delete', function(){
-          update(function(){
-            let targetIndex = games.indexOf(selectedGame)
-            games.splice(targetIndex, 1)
-            selectedView = 'games'
-            // Persisting our edits
+//         renderButton('Edit', function(){
+//           update(function(){
+//             selectedView = 'game-form'
+//           })
+//         }),
+
+        renderButton('Delete Game',()=> {
+            console.log('game id',selectedGame.id)
+            games.splice(games.indexOf(selectedGame),1)
             server.delete(`/games/${selectedGame.id}`)
-          })
-        })
+            .then(()=>{
+                selectedView = 'games'
+                render()
+            })
+        }),
+        renderLabel('Questions'),
+        renderList(
+            ...selectedGame.questions.map(function(question){
+                return renderListItem(question.content)
+            })
+        )
+
     )
     return selectedGameDiv
 }
