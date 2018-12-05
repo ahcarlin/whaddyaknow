@@ -5,7 +5,6 @@ const server = ajax('http://localhost:3000/api/v1')
 let games = []
 let selectedGame = {questions: []}
 
-
 let selectedView = 'games' // changed for testing
 
 server.get('/games')
@@ -36,11 +35,6 @@ function render() {
 }
 
 
-// TODO this probably moves to games.js
-// function renderQuestion(question) {
-
-// }
-
 const renderGamesList = function() {
   titleBox.innerHTML = "<h2><i class='icon star is-medium'></i> All Games</h2>"
 
@@ -61,9 +55,6 @@ const renderGamesList = function() {
             update(function(){
                 selectedGame = {
                     title: ''
-                    // description: '',
-                    // image: '',
-                    // questions: []
                 }
                 selectedView = 'game-form'
             })
@@ -72,10 +63,7 @@ const renderGamesList = function() {
 }
 
 
-// TODO renderSelectedGame will be the game show page with title, number of questions, high score, average score, and attempts
-// start game render will be in game.js, also at end of game we have to show their score and some other things maybe
 // edit game will go to game-form
-// delete game goes to delete
 
 const renderSelectedGame = function(){
   titleBox.innerHTML = "<h2><i class='icon star is-medium'></i></h2>"
@@ -88,6 +76,9 @@ const renderSelectedGame = function(){
         // }),
         renderHeader(selectedGame.title),
         renderParagraph(`High Score: ${selectedGame.high_score}`),
+        renderParagraph(`Average Score: ${selectedGame.average_score}`),
+        renderParagraph(`Attempts: ${selectedGame.attempts}`),
+        renderParagraph(`Number of Questions: ${selectedGame.questions.length}`),
         h('br'),
         renderButton('PLAY', function(){
           update(function(){
@@ -101,7 +92,7 @@ const renderSelectedGame = function(){
 //         }),
 
         renderButton('Delete Game',()=> {
-            
+
             games.splice(games.indexOf(selectedGame),1)
             server.delete(`/games/${selectedGame.id}`)
             .then(()=>{
@@ -113,42 +104,12 @@ const renderSelectedGame = function(){
             selectedView = 'games'
             render()
         })
-
-        // renderLabel('Questions'),
-        // renderList(
-        //     ...selectedGame.questions.map(function(question){
-        //         return renderListItem(question.content)
-        //     })
-        // )
-
     )
     return selectedGameDiv
 }
 
-const renderGamePlay = () => {
-  titleBox.innerHTML = `<h2><i class='icon star is-medium'></i> ${selectedGame.title} (playing part)</h2>`
-  app.innerHTML = `
-  <section class='container with-title is-rounded'>
-      <h5 class='title'>Question 1</h5>
-      <p>IN HERE WE WILL ITERATE OR SOMETHING???</p>
-  </section>
-  `
-  // TODO this chunk renders questions, and should show up one at a time after game is started
-  // ,
-  // renderLabel('Questions'),
-  // renderList(
-    //     ...selectedGame.questions.map(function(question){
-      //         return renderListItem(question.content)
-      //     })
-      // )
-
-      //,
-
-}
 
 const update = function(updater) {
     updater()
     render()
 }
-
-// render()
