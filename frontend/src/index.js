@@ -6,17 +6,17 @@ let games = []
 let selectedGame = {questions: []}
 console.log(selectedGame)
 
-let selectedView = 'game-form' // changed for testing
+let selectedView = 'games' // changed for testing
 
 server.get('/games')
-.then(result => {  
-    update(() => { 
-        games = result 
+.then(result => {
+    update(() => {
+        games = result
         selectedView = 'games'
         })
     })
 
-function render() { 
+function render() {
     app.innerHTML = ''
     switch(selectedView){
         case 'games':
@@ -28,8 +28,11 @@ function render() {
         case 'game-form':
         app.append( renderGameForm() )
         break;
+        case 'play-game':
+        app.append( renderGamePlay() )
+        break;
     }
-    
+
 }
 
 const renderGameForm = () => {
@@ -49,8 +52,8 @@ const renderGameForm = () => {
         </div>
         `
     submit = renderButton('Submit', ()=>{
-        selectedGame.title = document.getElementById('title').value    
-        selectedGame.numQuests = document.getElementById('numOfQuestions').value    
+        selectedGame.title = document.getElementById('title').value
+        selectedGame.numQuests = document.getElementById('numOfQuestions').value
         selectedGame.category = document.getElementById('categoryQuestions').value
         selectedGame.high_score = 0
         selectedGame.questions = []
@@ -89,8 +92,7 @@ const renderQuestionForm = (index, numQuests) => {
     submit.innerHTML = 'Submit'
     questionForm.append(submit)
     app.append(questionForm)
-    
-    console.log(selectedGame)
+
     let question = {}
     submit.addEventListener('click',()=>{
         question.content = document.getElementById('content').value
@@ -109,21 +111,19 @@ const renderQuestionForm = (index, numQuests) => {
                 update(function () {
                     selectedView = 'game'
                 })
-            }) 
-
+            })
         }
     })
-
 }
 
 // TODO this probably moves to games.js
 // function renderQuestion(question) {
-    
+
 // }
 
-// TODO we need a header title thing here that says ALL GAMES
 const renderGamesList = function() {
-    console.log('rendering games list')
+  titleBox.innerHTML = "<h2><i class='icon star is-medium'></i> All Games</h2>"
+
     return renderList(
         ...games.map( function(currentGame){
             return renderListItem(currentGame.title, function(){
@@ -133,12 +133,13 @@ const renderGamesList = function() {
                             selectedGame = currentGame
                             selectedView = 'game'
                         })
-                    }) 
+                    })
            })
         }),
+
         renderButton('Add Game', function(){
             update(function(){
-                selectedGame = { 
+                selectedGame = {
                     title: ''
                     // description: '',
                     // image: '',
@@ -152,12 +153,12 @@ const renderGamesList = function() {
 
 
 // TODO renderSelectedGame will be the game show page with title, number of questions, high score, average score, and attempts
-// two buttons for 'start game', 'edit game', 'delete game'
 // start game render will be in game.js, also at end of game we have to show their score and some other things maybe
 // edit game will go to game-form
 // delete game goes to delete
 
 const renderSelectedGame = function(){
+  titleBox.innerHTML = "<h2><i class='icon star is-medium'></i></h2>"
     let selectedGameDiv = h('div')
     selectedGameDiv.append(
         renderLink('Back to Games', function(){
@@ -168,6 +169,17 @@ const renderSelectedGame = function(){
         renderHeader(selectedGame.title),
         renderParagraph(`High Score: ${selectedGame.high_score}`),
         h('br'),
+        renderButton('PLAY', function(){
+          update(function(){
+            selectedView = 'play-game'
+          })
+        }),
+//         renderButton('Edit', function(){
+//           update(function(){
+//             selectedView = 'game-form'
+//           })
+//         }),
+
         renderButton('Delete Game',()=> {
             console.log('game id',selectedGame.id)
             games.splice(games.indexOf(selectedGame),1)
@@ -183,25 +195,31 @@ const renderSelectedGame = function(){
                 return renderListItem(question.content)
             })
         )
-        //,
-        // renderButton('Edit', function(){
-        //     update(function(){
-        //         selectedView = 'game-form'
-        //     })
-        // }),
-        // renderButton('Delete', function(){
-        //     update(function(){
-        //         let targetIndex = games.indexOf(selectedGame)
-        //         games.splice(targetIndex, 1)
-        //         selectedView = 'games'
-        //         // Persisting our edits
-        //         server.delete(`/games/${selectedGame.id}`)
-        //     })
-        // })
+
     )
     return selectedGameDiv
 }
 
+const renderGamePlay = () => {
+  titleBox.innerHTML = `<h2><i class='icon star is-medium'></i> ${selectedGame.title} (playing part)</h2>`
+  app.innerHTML = `
+  <section class='container with-title is-rounded'>
+      <h5 class='title'>Question 1</h5>
+      <p>IN HERE WE WILL ITERATE OR SOMETHING???</p>
+  </section>
+  `
+  // TODO this chunk renders questions, and should show up one at a time after game is started
+  // ,
+  // renderLabel('Questions'),
+  // renderList(
+    //     ...selectedGame.questions.map(function(question){
+      //         return renderListItem(question.content)
+      //     })
+      // )
+
+      //,
+
+}
 
 const update = function(updater) {
     updater()
