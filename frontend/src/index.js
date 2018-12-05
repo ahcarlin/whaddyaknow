@@ -30,15 +30,15 @@ const renderGameForm = () => {
     const gameForm = document.createElement('form')
     gameForm.innerHTML = `
         <div class='container is-rounded'>
-            <input id='title' type='text' placeholder="Title" value=''>
+            <input id='title' type='text' placeholder="Title" class='input'value=''>
         </div>
         <div class='container is-rounded with-title'>
             <label class='title'>How many questions?</label>
-            <input id='numOfQuestions' type='number' placeholder="15" value='15'>
+            <input id='numOfQuestions' type='number' class='input' placeholder="15" value='15'>
         </div>
         <div class='container is-rounded with-title'>
             <label class='title'>What category?</label>
-            <input id='categoryQuestions' type='text' placeholder='General' value="General">
+            <input id='categoryQuestions' type='text' class='input' placeholder='General' value="General">
         </div>
         `
         // <button class='btn' type='button'>Submit</button>
@@ -72,17 +72,17 @@ const renderQuestionForm = (i) => {
     questionForm.innerHTML = `
         <div class='container is-rounded with-title'>
             <label class='title'>Question ${i}</label>
-            <input id='content' type='text'>
+            <input id='content' type='text' class='input'>
         </div>
         <div class='container is-rounded with-title'>
             <label class='title'>Correct answer</label>
-            <input id='correct' type='text'>
+            <input id='correct' type='text' class='input'>
         </div>
         <div class='container is-rounded with-title'>
             <label class='title'>Incorrect Answers</label>
-            <input class='incorrect' type='text'>
-            <input class='incorrect' type='text'>
-            <input class='incorrect' type='text'>
+            <input class='incorrect input' type='text'>
+            <input class='incorrect input' type='text'>
+            <input class='incorrect input' type='text'>
         </div>
         `
     submit = document.createElement('button')
