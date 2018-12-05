@@ -4,7 +4,7 @@ const server = ajax('http://localhost:3000/api/v1')
 
 let games = []
 let selectedGame = {questions: []}
-console.log(selectedGame)
+
 
 let selectedView = 'games' // changed for testing
 
@@ -105,7 +105,7 @@ const renderQuestionForm = (index, numQuests) => {
             renderQuestionForm(index+1, numQuests)
         }
         else {
-            console.log('end of question form, yay!', selectedGame)
+            
             server.post('/games', selectedGame)
             .then(function(){
                 update(function () {
@@ -181,7 +181,7 @@ const renderSelectedGame = function(){
 //         }),
 
         renderButton('Delete Game',()=> {
-            console.log('game id',selectedGame.id)
+            
             games.splice(games.indexOf(selectedGame),1)
             server.delete(`/games/${selectedGame.id}`)
             .then(()=>{
