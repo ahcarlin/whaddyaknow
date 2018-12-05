@@ -4,29 +4,104 @@ const server = ajax('http://localhost:3000/api/v1')
 
 let games = []
 let selectedGame = {}
-let selectedView = 'games'
+let selectedView = 'game-form' // changed for testing
 
 server.get('/games')
 .then(result => {update(() => { games = result })})
 
-function render() {
+function render() { 
     app.innerHTML = ''
     switch(selectedView){
         case 'games':
-            app.append( renderGamesList() )
+        app.append( renderGamesList() )
         break;
         case 'game':
-            app.append( renderSelectedGame() )
+        app.append( renderSelectedGame() )
         break;
         case 'game-form':
-            app.append( renderGameForm() )
+        app.append( renderGameForm() )
         break;
     }
-
+    
 }
 
-function renderGameForm() {
-    titleBox.innerHTML = 'New Game'
+const renderGameForm = () => {
+    titleBox.innerHTML = 'Create A Game'
+    const gameForm = document.createElement('form')
+    gameForm.innerHTML = `
+        <div class='container is-rounded'>
+            <input id='title' type='text' placeholder="Title" value=''>
+        </div>
+        <div class='container is-rounded with-title'>
+            <label class='title'>How many questions?</label>
+            <input id='numOfQuestions' type='number' placeholder="15" value='15'>
+        </div>
+        <div class='container is-rounded with-title'>
+            <label class='title'>What category?</label>
+            <input id='categoryQuestions' type='text' placeholder='General' value="General">
+        </div>
+        `
+        // <button class='btn' type='button'>Submit</button>
+    submit = document.createElement('button')
+    submit.setAttribute('class','btn')
+    submit.setAttribute('type', 'button')
+    submit.innerHTML = 'Submit'
+    gameForm.append(submit)
+    let gameParams = {}
+    submit.addEventListener('click', () => {
+        gameParams.title = document.getElementById('title').value    
+        gameParams.numQuests = document.getElementById('numOfQuestions').value    
+        gameParams.category = document.getElementById('categoryQuestions').value
+        getQuestions(gameParams)
+    })
+    return gameForm
+}
+
+const getQuestions = (gameParams) => {
+    let questionArray = []
+    // don't know how to get this to work
+    for (i=1; i<=gameParams.numQuests; i++){
+        questionArray.push(renderQuestionForm(i))
+    }
+    return questionArray
+}
+
+const renderQuestionForm = (i) => {
+    app.innerHTML = ''
+    const questionForm = document.createElement('form')
+    questionForm.innerHTML = `
+        <div class='container is-rounded with-title'>
+            <label class='title'>Question ${i}</label>
+            <input id='content' type='text'>
+        </div>
+        <div class='container is-rounded with-title'>
+            <label class='title'>Correct answer</label>
+            <input id='correct' type='text'>
+        </div>
+        <div class='container is-rounded with-title'>
+            <label class='title'>Incorrect Answers</label>
+            <input class='incorrect' type='text'>
+            <input class='incorrect' type='text'>
+            <input class='incorrect' type='text'>
+        </div>
+        `
+    submit = document.createElement('button')
+    submit.setAttribute('class', 'btn')
+    submit.setAttribute('type', 'button')
+    submit.innerHTML = 'Submit'
+    questionForm.append(submit)
+    app.append(questionForm)
+    
+    let question = {}
+    submit.addEventListener('click',()=>{
+        question.content = document.getElementById('content').value
+        question.correct = document.getElementById('correct').value
+        incorrectNodes = document.querySelectorAll('.incorrect')
+        question.incorrect = []
+        incorrectNodes.forEach((node)=>question.incorrect.push(node.value))
+        return question
+    })
+
 }
 
 // TODO this probably moves to games.js
