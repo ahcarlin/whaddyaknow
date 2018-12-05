@@ -163,6 +163,10 @@ const renderSelectedGame = function(){
         renderHeader(selectedGame.title),
         renderParagraph(`High Score: ${selectedGame.high_score}`),
         h('br'),
+        renderButton('Delete Game',()=> {
+            server.delete(`/games/${selectedGame.id}`)
+            .then(renderGamesList())
+        }),
         renderLabel('Questions'),
         renderList(
             ...selectedGame.questions.map(function(question){
