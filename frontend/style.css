@@ -7,5 +7,10 @@ h1 {
 }
 
 button {
-    margin: 10px
+    margin: 10px,
+    cursor: pointer
+}
+
+li {
+  cursor: pointer
 }
