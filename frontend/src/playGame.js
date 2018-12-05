@@ -26,10 +26,8 @@ const renderGamePlay = () => {
       <!-- <p>${selectedGame.questions[questionsIndex].incorrect[0]}</p> -->
   </section>
   `
-  console.log(selectedGame)
-  console.log(selectedGame.questions)
-
+  //this is a hack, please resolve in the future
+  return ''
   // TODO start game render will be in game.js, also at end of game we have to show their score and some other things maybe
-  renderButton()
-
+  //renderButton()
 }

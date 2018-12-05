@@ -5,7 +5,7 @@ const server = ajax('http://localhost:3000/api/v1')
 let games = []
 let selectedGame = {questions: []}
 
-let selectedView = 'games' // changed for testing
+let selectedView // = 'games' changed for testing
 
 server.get('/games')
 .then(result => {
