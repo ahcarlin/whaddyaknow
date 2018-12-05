@@ -3,7 +3,8 @@ const app = document.getElementById('app')
 const server = ajax('http://localhost:3000/api/v1')
 
 let games = []
-let selectedGame = {}
+let selectedGame = {questionArray: []}
+
 let selectedView = 'game-form' // changed for testing
 
 server.get('/games')
@@ -47,31 +48,29 @@ const renderGameForm = () => {
     submit.setAttribute('type', 'button')
     submit.innerHTML = 'Submit'
     gameForm.append(submit)
-    let gameParams = {}
     submit.addEventListener('click', () => {
-        gameParams.title = document.getElementById('title').value    
-        gameParams.numQuests = document.getElementById('numOfQuestions').value    
-        gameParams.category = document.getElementById('categoryQuestions').value
-        getQuestions(gameParams)
+        selectedGame.title = document.getElementById('title').value    
+        selectedGame.numQuests = document.getElementById('numOfQuestions').value    
+        selectedGame.category = document.getElementById('categoryQuestions').value
+        renderQuestionForm(1,selectedGame.numQuests)
     })
     return gameForm
 }
 
-const getQuestions = (gameParams) => {
-    let questionArray = []
-    // don't know how to get this to work
-    for (i=1; i<=gameParams.numQuests; i++){
-        questionArray.push(renderQuestionForm(i))
-    }
-    return questionArray
-}
+// const getQuestions = (gameParams) => {
+//     let questionArray = []
+//     // don't know how to get this to work
+//     questionArray.push(renderQuestionForm(1, gameParams.numQuests))
 
-const renderQuestionForm = (i) => {
+//     return questionArray
+// }
+
+const renderQuestionForm = (index, numQuests) => {
     app.innerHTML = ''
     const questionForm = document.createElement('form')
     questionForm.innerHTML = `
         <div class='container is-rounded with-title'>
-            <label class='title'>Question ${i}</label>
+            <label class='title'>Question ${index}</label>
             <input id='content' type='text' class='input'>
         </div>
         <div class='container is-rounded with-title'>
@@ -99,7 +98,13 @@ const renderQuestionForm = (i) => {
         incorrectNodes = document.querySelectorAll('.incorrect')
         question.incorrect = []
         incorrectNodes.forEach((node)=>question.incorrect.push(node.value))
-        return question
+        selectedGame.questionArray.push(question)
+        if (index<numQuests){
+            renderQuestionForm(index+1, numQuests)
+        }
+        else {
+            console.log('end of question form, yay!', selectedGame)
+        }
     })
 
 }
@@ -186,4 +191,4 @@ const update = function(updater) {
     render()
 }
 
-render()
+// render()
