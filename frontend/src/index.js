@@ -81,11 +81,11 @@ const renderSelectedGame = function(){
   titleBox.innerHTML = "<h2><i class='icon star is-medium'></i></h2>"
     let selectedGameDiv = h('div')
     selectedGameDiv.append(
-        renderLink('Back to Games', function(){
-            update(function(){
-                selectedView = 'games'
-            })
-        }),
+        // renderLink('Back to Games', function(){
+        //     update(function(){
+        //         selectedView = 'games'
+        //     })
+        // }),
         renderHeader(selectedGame.title),
         renderParagraph(`High Score: ${selectedGame.high_score}`),
         h('br'),
@@ -108,7 +108,12 @@ const renderSelectedGame = function(){
                 selectedView = 'games'
                 render()
             })
+        }),
+        renderButton('Back to Games', ()=>{
+            selectedView = 'games'
+            render()
         })
+
         // renderLabel('Questions'),
         // renderList(
         //     ...selectedGame.questions.map(function(question){
