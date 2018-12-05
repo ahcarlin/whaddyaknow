@@ -29,6 +29,7 @@ const renderParagraph = function(content){
 const renderButton = function(content, callback){
     let button =  h('button')
     button.innerText= content
+    button.className = 'btn'
     button.addEventListener('click', callback)
     return button
 }
