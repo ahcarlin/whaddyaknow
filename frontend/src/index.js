@@ -4,6 +4,7 @@ const server = ajax('http://localhost:3000/api/v1')
 
 let games = []
 let selectedGame = {questions: []}
+console.log(selectedGame)
 
 let selectedView = 'game-form' // changed for testing
 
@@ -51,6 +52,8 @@ const renderGameForm = () => {
         selectedGame.title = document.getElementById('title').value    
         selectedGame.numQuests = document.getElementById('numOfQuestions').value    
         selectedGame.category = document.getElementById('categoryQuestions').value
+        selectedGame.high_score = 0
+        selectedGame.questions = []
         renderQuestionForm(1,selectedGame.numQuests)
     })
     submit.setAttribute('class','btn')
@@ -87,6 +90,7 @@ const renderQuestionForm = (index, numQuests) => {
     questionForm.append(submit)
     app.append(questionForm)
     
+    console.log(selectedGame)
     let question = {}
     submit.addEventListener('click',()=>{
         question.content = document.getElementById('content').value
@@ -119,6 +123,7 @@ const renderQuestionForm = (index, numQuests) => {
 
 // TODO we need a header title thing here that says ALL GAMES
 const renderGamesList = function() {
+    console.log('rendering games list')
     return renderList(
         ...games.map( function(currentGame){
             return renderListItem(currentGame.title, function(){
@@ -131,7 +136,7 @@ const renderGamesList = function() {
                     }) 
            })
         }),
-        renderButton('+', function(){
+        renderButton('Add Game', function(){
             update(function(){
                 selectedGame = { 
                     title: ''
@@ -163,6 +168,15 @@ const renderSelectedGame = function(){
         renderHeader(selectedGame.title),
         renderParagraph(`High Score: ${selectedGame.high_score}`),
         h('br'),
+        renderButton('Delete Game',()=> {
+            console.log('game id',selectedGame.id)
+            games.splice(games.indexOf(selectedGame),1)
+            server.delete(`/games/${selectedGame.id}`)
+            .then(()=>{
+                selectedView = 'games'
+                render()
+            })
+        }),
         renderLabel('Questions'),
         renderList(
             ...selectedGame.questions.map(function(question){
