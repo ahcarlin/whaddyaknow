@@ -3,12 +3,17 @@ const app = document.getElementById('app')
 const server = ajax('http://localhost:3000/api/v1')
 
 let games = []
-let selectedGame = {questionArray: []}
+let selectedGame = {questions: []}
 
 let selectedView = 'game-form' // changed for testing
 
 server.get('/games')
-.then(result => {update(() => { games = result })})
+.then(result => {  
+    update(() => { 
+        games = result 
+        selectedView = 'games'
+        })
+    })
 
 function render() { 
     app.innerHTML = ''
@@ -42,28 +47,19 @@ const renderGameForm = () => {
             <input id='categoryQuestions' type='text' class='input' placeholder='General' value="General">
         </div>
         `
-        // <button class='btn' type='button'>Submit</button>
-    submit = document.createElement('button')
-    submit.setAttribute('class','btn')
-    submit.setAttribute('type', 'button')
-    submit.innerHTML = 'Submit'
-    gameForm.append(submit)
-    submit.addEventListener('click', () => {
+    submit = renderButton('Submit', ()=>{
         selectedGame.title = document.getElementById('title').value    
         selectedGame.numQuests = document.getElementById('numOfQuestions').value    
         selectedGame.category = document.getElementById('categoryQuestions').value
         renderQuestionForm(1,selectedGame.numQuests)
     })
+    submit.setAttribute('class','btn')
+    exit = renderButton('Exit', renderGamesList)
+    exit.setAttribute('class', 'btn')
+
+    gameForm.append(submit, exit)
     return gameForm
 }
-
-// const getQuestions = (gameParams) => {
-//     let questionArray = []
-//     // don't know how to get this to work
-//     questionArray.push(renderQuestionForm(1, gameParams.numQuests))
-
-//     return questionArray
-// }
 
 const renderQuestionForm = (index, numQuests) => {
     app.innerHTML = ''
@@ -98,12 +94,19 @@ const renderQuestionForm = (index, numQuests) => {
         incorrectNodes = document.querySelectorAll('.incorrect')
         question.incorrect = []
         incorrectNodes.forEach((node)=>question.incorrect.push(node.value))
-        selectedGame.questionArray.push(question)
+        selectedGame.questions.push(question)
         if (index<numQuests){
             renderQuestionForm(index+1, numQuests)
         }
         else {
             console.log('end of question form, yay!', selectedGame)
+            server.post('/games', selectedGame)
+            .then(function(){
+                update(function () {
+                    selectedView = 'game'
+                })
+            }) 
+
         }
     })
 
