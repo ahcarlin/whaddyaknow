@@ -32,7 +32,7 @@ function render() {
 }
 
 const renderGameForm = () => {
-    titleBox.innerHTML = 'Create A Game'
+    titleBox.innerHTML = "<h2><i class='icon star is-medium'></i>Create A Game</h2>"
     const gameForm = document.createElement('form')
     gameForm.innerHTML = `
         <div class='container is-rounded'>
