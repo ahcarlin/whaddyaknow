@@ -7,6 +7,8 @@ let selectedGame = {questions: []}
 
 let selectedView // = 'games' changed for testing
 
+
+
 server.get('/games')
 .then(result => {
     update(() => {
@@ -33,7 +35,6 @@ function render() {
     }
 
 }
-
 
 const renderGamesList = function() {
   titleBox.innerHTML = "<h2><i class='icon star is-medium'></i> All Games</h2>"
@@ -108,6 +109,10 @@ const renderSelectedGame = function(){
     return selectedGameDiv
 }
 
+document.querySelector('h1').addEventListener( 'click', e => {
+  selectedView = 'games'
+  render()
+})
 
 const update = function(updater) {
     updater()
