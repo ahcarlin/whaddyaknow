@@ -67,7 +67,7 @@ const renderGamesList = function() {
 // edit game will go to game-form
 
 const renderSelectedGame = function(){
-  titleBox.innerHTML = "<h2><i class='icon star is-medium'></i></h2>"
+  titleBox.innerHTML = ``
     let selectedGameDiv = h('div')
     selectedGameDiv.append(
         renderHeader(selectedGame.title),
@@ -76,16 +76,21 @@ const renderSelectedGame = function(){
         renderParagraph(`Attempts: ${selectedGame.attempts}`),
         renderParagraph(`Number of Questions: ${selectedGame.questions.length}`),
         h('br'),
-        renderButton('PLAY', function(){
+        renderButton('<i class="nes-logo"></i> Play', function(){
           update(function(){
             selectedView = 'play-game'
           })
         }),
-        renderButton('Delete Game',()=> {
+        renderButton('<i class="icon close"></i> Delete Game',()=> {
             server.delete(`/games/${selectedGame.id}`)
             .then( getGames )
         }),
-        renderButton('Back to Games', ()=>getGames())
+
+        renderButton('<i class="icon star"></i> Back to Games', ()=>{
+            selectedView = 'games'
+            render()
+        })
+
     )
     return selectedGameDiv
 }
