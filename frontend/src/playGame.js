@@ -115,6 +115,7 @@ const updateHighScore = () => {
   highScoreForm.append(highScoreTitle)
   nameField = document.createElement('input')
   nameField.className = 'input'
+  nameField.setAttribute('maxlength', '3')
   nameField.placeholder = 'your initials'
   highScoreForm.append(
     nameField,
@@ -124,11 +125,11 @@ const updateHighScore = () => {
       updateGame(selectedGame)
     })
   )
-  nameField.addEventListener('keydown', e => {
-    if(e.target.value.length >= 3) {
-      e.preventDefault()
-    }
-  })
+  // nameField.addEventListener('keydown', e => {
+  //   if(e.target.value.length >= 3) {
+  //     e.preventDefault()
+  //   }
+  // })
   app.append(highScoreForm)
 
 }
