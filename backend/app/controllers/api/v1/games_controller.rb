@@ -25,7 +25,7 @@ class Api::V1::GamesController < ApplicationController
   end
 
   def game_params
-    params.permit(:title, :high_score, :average_score, :attempts, questions_attributes: [ [ :id, :question, :correct_answer, :incorrect_answers ] ] )
+    params.permit(:title, :high_score, :average_score, :attempts, questions_attributes: [ [ :id, :question, :correct_answer, :incorrect_answers => [] ] ])
   end
 
   def define_current_game

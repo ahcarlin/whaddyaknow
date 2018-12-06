@@ -59,9 +59,7 @@ const renderQuestionForm = (index, numQuests) => {
             <input class='incorrect input' type='text'>
         </div>
         `
-    // submit = document.createElement('button')
-    // submit.innerHTML = 'Submit'
-    
+
     let question = {}
     if (index<=numQuests){
         submit = renderButton('Submit',()=>{
