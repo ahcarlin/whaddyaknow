@@ -7,6 +7,11 @@ let selectedGame = {questions: []}
 
 let selectedView 
 
+document.querySelector('h1').addEventListener('click', e => {
+  selectedView = 'games'
+  render()
+})
+
 const getGames = function() {server.get('/games')
 .then(result => {
     update(() => {
@@ -72,6 +77,7 @@ const renderSelectedGame = function(){
     selectedGameDiv.append(
         renderHeader(selectedGame.title),
         renderParagraph(`High Score: ${selectedGame.high_score}`),
+        renderParagraph(`High Score Holder: ${selectedGame.high_score_holder}`),
         renderParagraph(`Average Score: ${selectedGame.average_score}`),
         renderParagraph(`Attempts: ${selectedGame.attempts}`),
         renderParagraph(`Number of Questions: ${selectedGame.questions.length}`),

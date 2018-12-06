@@ -6,7 +6,7 @@ let score = 0
 
 const renderGamePlay = () => {
   app.innerHTML = `score: ${score}`
-  titleBox.innerHTML = `<h2><i class='icon star is-medium'></i> ${selectedGame.title} (playing)</h2>`
+  titleBox.innerHTML = `<h2><i class='icon star is-medium'></i> ${selectedGame.title}</h2>`
 
   // create element to display the question and append to #app
   q1 = document.createElement('p')
@@ -56,7 +56,6 @@ const checkAnswer = () => {
   document.querySelectorAll('input').forEach( e => {
     if (e.checked) {
       if (e.nextElementSibling.innerText === selectedGame.questions[questionsIndex].correct_answer) {
-        console.log('yay')
         score++
       }
     }
@@ -69,15 +68,20 @@ const renderNextQuestion = () => {
     renderGamePlay()
   }
   else {
+    selectedGame.attempts++
+    updateGame(selectedGame)
     renderGameEnd()
   }
 }
 
 const renderGameEnd = () => {
   app.innerHTML = `
-  final score: ${score}<br><br>
-  [if high score, submit your name yay]<br>
+  Final Score: ${score}<br><br>
+  Attempts: ${selectedGame.attempts}<br>
   `
+  if (score > selectedGame.high_score) {
+    updateHighScore()
+  }
   app.append(
     renderButton('play again', () => {
       questionsIndex = 0
@@ -85,16 +89,41 @@ const renderGameEnd = () => {
       answers = []
       renderGamePlay()
     }),
-    renderButton('back to all games', getGames)
+    renderButton('back to all games', () => {
+      questionsIndex = 0
+      score = 0
+      answers = []
+      getGames
+    })
   )
-  if (score > selectedGame.high_score) {
-    selectedGame.high_score = score;
-    // save to database
-    // render high_score_form to accept initials
-  }
-  else {
-    console.log('joe disapproval face')
-  }
-  // selectedGame.attempts++ save to database
-  // selectedGame.high_score save to database
+}
+
+function updateGame(selectedGame){
+    server.patch(`/games/${selectedGame.id}`, selectedGame)
+}
+
+const updateHighScore = () => {
+  highScoreForm = document.createElement('form')
+  highScoreForm.className = 'container with-title'
+  highScoreTitle = document.createElement('h3') 
+  highScoreTitle.innerHTML = "New High Score! Please enter initials"
+  highScoreTitle.className = "title"
+  highScoreForm.append(highScoreTitle)
+  nameField = document.createElement('input')
+  nameField.placeholder = 'your initials'
+  highScoreForm.append(
+    nameField,
+    renderButton('save', () => {
+      selectedGame.high_score = score;
+      selectedGame.high_score_holder = nameField.value
+      updateGame(selectedGame)
+    })
+  )
+  nameField.addEventListener('input', e => {
+    if(e.target.value.length > 3) {
+      alert('must be < 3 characters to save')
+    }
+  })
+  app.append(highScoreForm)
+
 }
