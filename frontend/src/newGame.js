@@ -18,7 +18,9 @@ const renderGameForm = () => {
         selectedGame.title = document.getElementById('title').value
         selectedGame.numQuests = document.getElementById('numOfQuestions').value
         selectedGame.category = document.getElementById('categoryQuestions').value
+        selectedGame.high_score_holder = 'NIL'
         selectedGame.high_score = 0
+        selectedGame.attempts = 0
         selectedGame.questions = []
         renderQuestionForm(1,selectedGame.numQuests)
     })
@@ -54,10 +56,10 @@ const renderQuestionForm = (index, numQuests) => {
     if (index<=numQuests){
         submit = renderButton('Submit',()=>{
             question.content = document.getElementById('content').value
-            question.correct = document.getElementById('correct').value
+            question.correct_answer = document.getElementById('correct').value
             incorrectNodes = document.querySelectorAll('.incorrect')
-            question.incorrect = []
-            incorrectNodes.forEach((node)=>question.incorrect.push(node.value))
+            question.incorrect_answers = []
+            incorrectNodes.forEach((node)=>question.incorrect_answers.push(node.value))
             selectedGame.questions.push(question)
             renderQuestionForm(index+1, numQuests)
         })
