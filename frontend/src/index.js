@@ -86,10 +86,7 @@ const renderSelectedGame = function(){
             .then( getGames )
         }),
 
-        renderButton('<i class="icon star"></i> Back to Games', ()=>{
-            selectedView = 'games'
-            render()
-        })
+        renderButton('<i class="icon star"></i> Back to Games', getGames)
 
     )
     return selectedGameDiv
