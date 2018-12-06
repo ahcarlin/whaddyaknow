@@ -1,5 +1,5 @@
 class Game < ApplicationRecord
-  has_many :questions
+  has_many :questions, dependent: :delete_all
   accepts_nested_attributes_for :questions
   before_save :default_values
 

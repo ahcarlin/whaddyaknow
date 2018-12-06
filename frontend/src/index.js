@@ -7,15 +7,14 @@ let selectedGame = {questions: []}
 
 let selectedView // = 'games' changed for testing
 
-
-
-server.get('/games')
+const getGames = function() {server.get('/games')
 .then(result => {
     update(() => {
         games = result
         selectedView = 'games'
         })
     })
+}
 
 function render() {
     app.innerHTML = ''
@@ -35,6 +34,7 @@ function render() {
     }
 
 }
+
 
 const renderGamesList = function() {
   titleBox.innerHTML = "<h2><i class='icon star is-medium'></i> All Games</h2>"
@@ -94,12 +94,11 @@ const renderSelectedGame = function(){
 
         renderButton('Delete Game',()=> {
 
-            games.splice(games.indexOf(selectedGame),1)
+            //games.splice(games.indexOf(selectedGame),1)
             server.delete(`/games/${selectedGame.id}`)
-            .then(()=>{
-                selectedView = 'games'
-                render()
-            })
+            .then( getGames
+               // update(() => selectedView = 'games')
+            )
         }),
         renderButton('Back to Games', ()=>{
             selectedView = 'games'
@@ -109,12 +108,9 @@ const renderSelectedGame = function(){
     return selectedGameDiv
 }
 
-document.querySelector('h1').addEventListener( 'click', e => {
-  selectedView = 'games'
-  render()
-})
 
 const update = function(updater) {
     updater()
     render()
 }
+getGames()
