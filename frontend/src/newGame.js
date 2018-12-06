@@ -108,48 +108,25 @@ function finishQuestionList(num){
     apiQueryForm.append(categorySelectorsDiv)
     addQuestionsButton = document.createElement('button')
     addQuestionsButton.setAttribute('id','addQuestionsButton')
-    addQuestionsButton.inneHTML = 'Get Questions'
-    apiQueryForm.append(addQuestionsButton)
-    
-    app.append(apiQueryForm)
-    addQuestionsButton.addEventListener('click',()=>{
-        queryParams = {}
+    addQuestionsButton.setAttribute('class','btn')
+    addQuestionsButton.innerHTML = 'Get Questions';
+
+    addQuestionsButton.addEventListener('click',(e)=>{
+        e.preventDefault()
+        let queryParams = {}
         queryParams.amount = num
         queryParams.difficulty = document.getElementById('difficulty').value
         queryParams.type = document.getElementById('type').value
-        queryParams.category = document.getElementById('category').value
-
-        // this should be getQuestions
-        searchParams = `?amount=${queryParams.amount}`
-
-        if (queryParams.difficulty) {
-            searchParams += `&difficulty=${queryParams.difficulty}`
-        }
-
-        if (queryParams.type) {
-            searchParams += `&type=${queryParams.type}`
-        }
-
-        if (queryParams.category) {
-            searchParams += `&category=${categoryArray.indexOf(queryParams.category) + 9}`
-        }
-
-        let results;
-        fetch(`https://opentdb.com/api.php${searchParams}`)
-            .then((resp) => resp.json())
-            .then((data) => {
-                (results = data)
-                console.log(results)
-                // return (results.results)
+        queryParams.category = document.getElementById('category').value;
+        
+        getQuestions(queryParams)
+            .then( questions => {
+                questions.forEach((question) => selectedGame.questions.push(question))
+                saveGame(selectedGame)
             })
-            // end of getQuestions
-            console.log(results)
-            console.log(results.results)
-
-        apiQuestions = results.results.join(',')
-        selectedGame.questions.push(apiQuestions)
-        saveGame(selectedGame)
     })    
+    apiQueryForm.append(addQuestionsButton)
+    app.append(apiQueryForm)
 }
 
 function saveGame(selectedGame){
@@ -162,52 +139,3 @@ function saveGame(selectedGame){
     })
 }
 
-const categoryArray = ['General Knowledge',
-    'Entertainment: Books',
-    'Entertainment: Film',
-    'Entertainment: Music',
-    'Entertainment: Musicals & Theatres',
-    'Entertainment: Television',
-    'Entertainment: Video Games',
-    'Entertainment: Board Games',
-    'Science & Nature',
-    'Science: Computers',
-    'Science: Mathematics',
-    'Mythology',
-    'Sports',
-    'Geography',
-    'History',
-    'Politics',
-    'Art',
-    'Celebrities',
-    'Animals',
-    'Vehicles',
-    'Entertainment: Comics',
-    'Science: Gadgets',
-    'Entertainment: Japanese Anime & Manga',
-    'Entertainment: Cartoon & Animations']
-
-// function getQuestions(queryParams) {
-//     searchParams = `?amount=${queryParams.amount}`
-
-//     if (queryParams.difficulty) {
-//         searchParams += `&difficulty=${queryParams.difficulty}`
-//     }
-
-//     if (queryParams.type) {
-//         searchParams += `&type=${queryParams.type}`
-//     }
-
-//     if (queryParams.category) {
-//         searchParams += `&category=${categoryArray.indexOf(queryParams.category) + 9}`
-//     }
-
-//     let results;
-//     fetch(`https://opentdb.com/api.php${searchParams}`)
-//         .then((resp) => resp.json())
-//         .then((data) => {
-//             (results = data)
-//             return (results.results)
-//         })
-//     // return results
-// }
