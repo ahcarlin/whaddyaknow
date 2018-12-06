@@ -9,15 +9,10 @@ const renderGameForm = () => {
             <label class='title'>How many questions?</label>
             <input id='numOfQuestions' type='number' class='input' placeholder="15" value='15'>
         </div>
-        <div class='container is-rounded with-title'>
-            <label class='title'>What category?</label>
-            <input id='categoryQuestions' type='text' class='input' placeholder='General' value="General">
-        </div>
         `
     submit = renderButton('Submit', ()=>{
         selectedGame.title = document.getElementById('title').value
         selectedGame.numQuests = document.getElementById('numOfQuestions').value
-        selectedGame.category = document.getElementById('categoryQuestions').value
         selectedGame.high_score_holder = 'AAA'
         selectedGame.high_score = 0
         selectedGame.attempts = 0
