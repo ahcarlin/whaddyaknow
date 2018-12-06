@@ -5,7 +5,7 @@ const server = ajax('http://localhost:3000/api/v1')
 let games = []
 let selectedGame = {questions: []}
 
-let selectedView // = 'games' changed for testing
+let selectedView 
 
 const getGames = function() {server.get('/games')
 .then(result => {
@@ -81,16 +81,9 @@ const renderSelectedGame = function(){
             selectedView = 'play-game'
           })
         }),
-//         renderButton('Edit', function(){
-//           update(function(){
-//             selectedView = 'game-form'
-//           })
-//         }),
-
         renderButton('Delete Game',()=> {
             server.delete(`/games/${selectedGame.id}`)
-            .then( getGames
-            )
+            .then( getGames )
         }),
         renderButton('Back to Games', ()=>getGames())
     )
