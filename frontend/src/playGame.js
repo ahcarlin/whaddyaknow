@@ -25,8 +25,8 @@ const renderGamePlay = () => {
   // answerBox.firstChild.firstElementChild.innerHTML = "<input type='radio' class='radio' name='answer' checked>"
   answerBox = document.createElement('section')
   answerBox.className = 'container is-rounded'
-  answers = selectedGame.questions[questionsIndex].incorrect.slice()
-  answers.push(selectedGame.questions[questionsIndex].correct)
+  answers = selectedGame.questions[questionsIndex].incorrect_answers.slice()
+  answers.push(selectedGame.questions[questionsIndex].correct_answer)
   shuffle(answers)
   answers.forEach( answer => {
     a = document.createElement('div')
@@ -39,7 +39,7 @@ const renderGamePlay = () => {
     answerBox.append(a)
     app.append(answerBox)
   })
-  answerBox.firstElementChild.firstElementChild.firstElementChild.checked = true  
+  answerBox.firstElementChild.firstElementChild.firstElementChild.checked = true
   answerBox
 
 
@@ -56,7 +56,7 @@ const renderGamePlay = () => {
 const checkAnswer = () => {
   document.querySelectorAll('input').forEach( e => {
     if (e.checked) {
-      if (e.nextElementSibling.innerText === selectedGame.questions[questionsIndex].correct) {
+      if (e.nextElementSibling.innerText === selectedGame.questions[questionsIndex].correct_answer) {
         console.log('yay')
         score++
       }
@@ -77,7 +77,7 @@ const renderNextQuestion = () => {
 
 const renderGameEnd = () => {
   app.innerHTML = `
-  final score: ${score}<br>
+  final score: ${score}<br><br>
   [if high score, submit your name yay]<br>
   `
   app.append(
@@ -103,31 +103,3 @@ const renderGameEnd = () => {
   // selectedGame.attempts++ save to database
   // selectedGame.high_score save to database
 }
-
-// -------------------------- a bunch of useless stuff below here --------------------
-
-// app.innerHTML = `
-// <section class='container with-title is-rounded'>
-//     <h5 class='title'>Question 1</h5>
-//     <p>${selectedGame.questions[questionsIndex].content}</p>
-// </section>
-// <section class='container with-title is-rounded'>
-    // <label>
-    //     <input type='radio' class='radio' name='answer' checked>
-    //     <span>${selectedGame.questions[questionsIndex].correct}</span>
-    // </label>
-//     <label>
-//         <input type='radio' class='radio' name='answer'>
-//         <span>${selectedGame.questions[questionsIndex].incorrect[0]}</span>
-//     </label>
-//     <label>
-//         <input type='radio' class='radio' name='answer'>
-//         <span>${selectedGame.questions[questionsIndex].incorrect[1]}</span>
-//     </label>
-//     <label>
-//         <input type='radio' class='radio' name='answer'>
-//         <span>${selectedGame.questions[questionsIndex].incorrect[2]}</span>
-//     </label>
-//
-// </section>
-// `
