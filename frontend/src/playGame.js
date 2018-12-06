@@ -12,6 +12,7 @@ const renderGamePlay = () => {
   q1 = document.createElement('p')
   q1.innerHTML = `
     <section class='container with-title is-rounded'>
+      <p class='title'>Question #${questionsIndex+1} of ${selectedGame.questions.length}</p>
       ${selectedGame.questions[questionsIndex].question}
     </section>
   `
@@ -21,10 +22,9 @@ const renderGamePlay = () => {
   // answers is a new array with correct and incorrect answers, then shuffle (see utils.js)
   // forEach to display each answer, they are selectable
 
-  // try to make first answer selected but not important
-  // answerBox.firstChild.firstElementChild.innerHTML = "<input type='radio' class='radio' name='answer' checked>"
   answerBox = document.createElement('section')
   answerBox.className = 'container is-rounded'
+
   answers = selectedGame.questions[questionsIndex].incorrect_answers.slice()
   answers.push(selectedGame.questions[questionsIndex].correct_answer)
   shuffle(answers)
@@ -93,8 +93,7 @@ const renderGameEnd = () => {
       questionsIndex = 0
       score = 0
       answers = []
-      selectedView = 'games'
-      render()
+      getGames
     })
   )
 }
@@ -105,9 +104,13 @@ function updateGame(selectedGame){
 
 const updateHighScore = () => {
   highScoreForm = document.createElement('form')
-  highScoreForm.className = 'container is-rounded'
+  highScoreForm.className = 'container with-title'
+  highScoreTitle = document.createElement('h3') 
+  highScoreTitle.innerHTML = "New High Score! Please enter initials"
+  highScoreTitle.className = "title"
+  highScoreForm.append(highScoreTitle)
   nameField = document.createElement('input')
-  nameField.placeholder = 'your name'
+  nameField.placeholder = 'your initials'
   highScoreForm.append(
     nameField,
     renderButton('save', () => {
