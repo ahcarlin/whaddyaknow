@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_03_212550) do
+ActiveRecord::Schema.define(version: 2018_12_06_155307) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 2018_12_03_212550) do
     t.integer "attempts"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "high_score_holder", limit: 3
   end
 
   create_table "questions", force: :cascade do |t|
