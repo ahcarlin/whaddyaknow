@@ -116,6 +116,7 @@ const updateHighScore = () => {
   highScoreTitle.className = "title"
   highScoreForm.append(highScoreTitle)
   nameField = document.createElement('input')
+  nameField.className = 'input'
   nameField.placeholder = 'your initials'
   highScoreForm.append(
     nameField,
