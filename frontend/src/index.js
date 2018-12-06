@@ -5,7 +5,7 @@ const server = ajax('http://localhost:3000/api/v1')
 let games = []
 let selectedGame = {questions: []}
 
-let selectedView 
+let selectedView
 
 
 const getGames = function() {server.get('/games')
@@ -52,6 +52,9 @@ function render() {
 
 const renderGamesList = function() {
   titleBox.innerHTML = "<h2><i class='icon star is-medium'></i> All Games</h2>"
+  games.sort(function(a, b) {
+    return a.id - b.id;
+  });
 
     return renderList(
         ...games.map( function(currentGame){

@@ -10,7 +10,7 @@ Game.destroy_all
 Question.destroy_all
 
 firstGame = Game.create({
-  title: "Trivia Thing 1"
+  title: "Trivia Thing 111"
 })
 
 firstGame.questions_attributes = [{
@@ -32,7 +32,7 @@ firstGame.questions_attributes = [{
 }]
 
 secondGame = Game.create({
-  title: "Trivia Thing 2"
+  title: "Trivia Thing 222"
 })
 
 secondGame.questions_attributes = [{
