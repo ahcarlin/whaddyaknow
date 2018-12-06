@@ -12,6 +12,7 @@ const renderGamePlay = () => {
   q1 = document.createElement('p')
   q1.innerHTML = `
     <section class='container with-title is-rounded'>
+      <p class='title'>Question #${questionsIndex+1} of ${selectedGame.questions.length}</p>
       ${selectedGame.questions[questionsIndex].question}
     </section>
   `
@@ -84,10 +85,7 @@ const renderGameEnd = () => {
       answers = []
       renderGamePlay()
     }),
-    renderButton('back to all games', () => {
-      selectedView = 'games'
-      render()
-    })
+    renderButton('back to all games', getGames)
   )
   if (score > selectedGame.high_score) {
     selectedGame.high_score = score;
