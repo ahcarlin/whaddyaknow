@@ -15,7 +15,7 @@ const renderListItem = function(content, callback){
 }
 
 const renderHeader = function(content){
-    let header =  h('h1')
+    let header =  h('h2')
     header.innerText= content
     return header
 }
@@ -28,7 +28,7 @@ const renderParagraph = function(content){
 
 const renderButton = function(content, callback){
     let button =  h('button')
-    button.innerText= content
+    button.innerHTML= content
     button.className = 'btn'
     button.addEventListener('click', callback)
     return button

@@ -9,15 +9,10 @@ const renderGameForm = () => {
             <label class='title'>How many questions?</label>
             <input id='numOfQuestions' type='number' class='input' placeholder="15" value='15'>
         </div>
-        <div class='container is-rounded with-title'>
-            <label class='title'>What category?</label>
-            <input id='categoryQuestions' type='text' class='input' placeholder='General' value="General">
-        </div>
         `
     submit = renderButton('Submit', ()=>{
         selectedGame.title = document.getElementById('title').value
         selectedGame.numQuests = document.getElementById('numOfQuestions').value
-        selectedGame.category = document.getElementById('categoryQuestions').value
         selectedGame.high_score_holder = 'AAA'
         selectedGame.high_score = 0
         selectedGame.attempts = 0
@@ -35,12 +30,9 @@ const renderQuestionForm = (index, numQuests) => {
     const questionForm = document.createElement('form')
     
     doneButton = renderButton('Add random questions to the quiz', (e) => {
-        // e.preventDefault()
         finishQuestionList(numQuests - (index-1))
     })
-    // doneButton = document.createElement('button')
-    // doneButton.innerHTML = 'Add random questions to the quiz'
-
+    
     app.append(doneButton)
 
     questionForm.innerHTML += `
@@ -59,19 +51,23 @@ const renderQuestionForm = (index, numQuests) => {
             <input class='incorrect input' type='text'>
         </div>
         `
-    // submit = document.createElement('button')
-    // submit.innerHTML = 'Submit'
-    
+
     let question = {}
     if (index<=numQuests){
         submit = renderButton('Submit',()=>{
+            
             question.question = document.getElementById('content').value
             question.correct_answer = document.getElementById('correct').value
-            incorrectNodes = document.querySelectorAll('.incorrect')
-            question.incorrect_answers = []
-            incorrectNodes.forEach((node)=>question.incorrect_answers.push(node.value))
-            selectedGame.questions.push(question)
-            renderQuestionForm(index+1, numQuests)
+            if (question.question === '' || question.correct_answer === ''){
+                alert("A question must have a question and an answer")
+                renderQuestionForm(index, numQuests)
+            } else {
+                incorrectNodes = document.querySelectorAll('.incorrect')
+                question.incorrect_answers = []
+                incorrectNodes.forEach((node)=>question.incorrect_answers.push(node.value))
+                selectedGame.questions.push(question)
+                renderQuestionForm(index+1, numQuests)
+            }
         })
     }else{
         saveGame(selectedGame)

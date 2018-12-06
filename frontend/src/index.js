@@ -5,7 +5,7 @@ const server = ajax('http://localhost:3000/api/v1')
 let games = []
 let selectedGame = {questions: []}
 
-let selectedView // = 'games' changed for testing
+let selectedView 
 
 document.querySelector('h1').addEventListener('click', e => {
   selectedView = 'games'
@@ -72,7 +72,7 @@ const renderGamesList = function() {
 // edit game will go to game-form
 
 const renderSelectedGame = function(){
-  titleBox.innerHTML = "<h2><i class='icon star is-medium'></i></h2>"
+  titleBox.innerHTML = ``
     let selectedGameDiv = h('div')
     selectedGameDiv.append(
         renderHeader(selectedGame.title),
@@ -82,29 +82,18 @@ const renderSelectedGame = function(){
         renderParagraph(`Attempts: ${selectedGame.attempts}`),
         renderParagraph(`Number of Questions: ${selectedGame.questions.length}`),
         h('br'),
-        renderButton('PLAY', function(){
+        renderButton('<i class="nes-logo"></i> Play', function(){
           update(function(){
             selectedView = 'play-game'
           })
         }),
-//         renderButton('Edit', function(){
-//           update(function(){
-//             selectedView = 'game-form'
-//           })
-//         }),
-
-        renderButton('Delete Game',()=> {
-
-            //games.splice(games.indexOf(selectedGame),1)
+        renderButton('<i class="icon close"></i> Delete Game',()=> {
             server.delete(`/games/${selectedGame.id}`)
-            .then( getGames
-               // update(() => selectedView = 'games')
-            )
+            .then( getGames )
         }),
-        renderButton('Back to Games', ()=>{
-            selectedView = 'games'
-            render()
-        })
+
+        renderButton('<i class="icon star"></i> Back to Games', getGames)
+
     )
     return selectedGameDiv
 }
