@@ -7,13 +7,14 @@ let selectedGame = {questions: []}
 
 let selectedView // = 'games' changed for testing
 
-server.get('/games')
+const getGames = function() {server.get('/games')
 .then(result => {
     update(() => {
         games = result
         selectedView = 'games'
         })
     })
+}
 
 function render() {
     app.innerHTML = ''
@@ -93,12 +94,11 @@ const renderSelectedGame = function(){
 
         renderButton('Delete Game',()=> {
 
-            games.splice(games.indexOf(selectedGame),1)
+            //games.splice(games.indexOf(selectedGame),1)
             server.delete(`/games/${selectedGame.id}`)
-            .then(()=>{
-                selectedView = 'games'
-                render()
-            })
+            .then( getGames
+               // update(() => selectedView = 'games')
+            )
         }),
         renderButton('Back to Games', ()=>{
             selectedView = 'games'
@@ -113,3 +113,4 @@ const update = function(updater) {
     updater()
     render()
 }
+getGames()
