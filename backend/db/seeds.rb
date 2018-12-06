@@ -14,21 +14,21 @@ firstGame = Game.create({
 })
 
 firstGame.questions_attributes = [{
-  content: "How many fish are made of cheese?",
-  correct: "Moon",
-  incorrect: ["The color blue", "Ford Edsel", "Portugal"]
+  question: "How many fish are made of cheese?",
+  correct_answer: "Moon",
+  incorrect_answers: ["The color blue", "Ford Edsel", "Portugal"]
 }]
 
 firstGame.questions_attributes = [{
-  content: "Am I full of owls?",
-  correct: "London",
-  incorrect: ["Harbinger", "Lamarck", "Buddy Beer"]
+  question: "Am I full of owls?",
+  correct_answer: "London",
+  incorrect_answers: ["Harbinger", "Lamarck", "Buddy Beer"]
 }]
 
 firstGame.questions_attributes = [{
-  content: "Is ANYTHING a table?",
-  correct: "John Stamos",
-  incorrect: ["Replicants From Blade Runner", "Oort Cloud", "Doctor Who"]
+  question: "Is ANYTHING a table?",
+  correct_answer: "John Stamos",
+  incorrect_answers: ["Replicants From Blade Runner", "Oort Cloud", "Doctor Who"]
 }]
 
 secondGame = Game.create({
@@ -36,24 +36,22 @@ secondGame = Game.create({
 })
 
 secondGame.questions_attributes = [{
-  content: "How many fish are made of cheese?",
-  correct: "Moon",
-  incorrect: ["The color blue", "Ford Edsel", "Portugal"]
+  question: "How many fish are made of cheese?",
+  correct_answer: "Moon",
+  incorrect_answers: ["The color blue", "Ford Edsel", "Portugal"]
 }]
 
 secondGame.questions_attributes = [{
-  content: "Am I full of owls?",
-  correct: "London",
-  incorrect: ["Harbinger", "Lamarck", "Buddy Beer"]
+  question: "Am I full of owls?",
+  correct_answer: "London",
+  incorrect_answers: ["Harbinger", "Lamarck", "Buddy Beer"]
 }]
 
 secondGame.questions_attributes = [{
-  content: "Is ANYTHING a table?",
-  correct: "John Stamos",
-  incorrect: ["Replicants From Blade Runner", "Oort Cloud", "Doctor Who"]
+  question: "Is ANYTHING a table?",
+  correct_answer: "John Stamos",
+  incorrect_answers: ["Replicants From Blade Runner", "Oort Cloud", "Doctor Who"]
 }]
 
-firstGame.save 
+firstGame.save
 secondGame.save
-
-

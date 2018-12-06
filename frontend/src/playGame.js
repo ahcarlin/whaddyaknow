@@ -12,7 +12,7 @@ const renderGamePlay = () => {
   q1 = document.createElement('p')
   q1.innerHTML = `
     <section class='container with-title is-rounded'>
-      ${selectedGame.questions[questionsIndex].content}
+      ${selectedGame.questions[questionsIndex].question}
     </section>
   `
   app.append(q1)
