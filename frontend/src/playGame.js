@@ -44,6 +44,7 @@ const renderGamePlay = () => {
 
   app.append(
     renderButton('try it', function() {
+      console.log(questionsIndex)
       checkAnswer()
       renderNextQuestion()
     }))
@@ -59,21 +60,38 @@ const checkAnswer = () => {
         score++
       }
     }
-    // alert('no')
+    // alert('pls choose answer') this won't be necessary if first answer is selected by default
   })
 }
 
 const renderNextQuestion = () => {
-  if (questionsIndex < selectedGame.questions.length) {
+  if (questionsIndex < selectedGame.questions.length-1) {
     questionsIndex++
     renderGamePlay()
   }
-  // TODO
-  else { console.log('show a game complete page with final score and button to play again or go back to all games if high score, show highScoreForm to enter initials and save to database')
+  else {
+    renderGameEnd()
   }
 }
 
-
+const renderGameEnd = () => {
+  app.innerHTML = `
+  final score: ${score}<br>
+  [if high score, submit your name yay]<br>
+  [a button to play again]<br>
+  [a button to go back to all games]
+  `
+  if (score > selectedGame.high_score) {
+    selectedGame.high_score = score;
+    // save to database
+    // render high_score_form to accept initials
+  }
+  else {
+    // joe disapproval face
+  }
+  // selectedGame.attempts++ save to database
+  // selectedGame.high_score save to database
+}
 
 // -------------------------- a bunch of useless stuff below here --------------------
 
