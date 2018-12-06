@@ -7,19 +7,28 @@ let selectedGame = {questions: []}
 
 let selectedView
 
-document.querySelector('h1').addEventListener('click', e => {
-  selectedView = 'games'
-  render()
-})
 
 const getGames = function() {server.get('/games')
 .then(result => {
     update(() => {
         games = result
         selectedView = 'games'
-        })
     })
+})
 }
+
+const getSelectedGame = function(game) {server.get(`/games/${game.id}`)
+.then(result => {
+    update(() => {
+        selectedGame = result
+        selectedView = 'game'
+    })
+})
+}
+
+
+
+document.querySelector('h1').addEventListener('click', getGames)
 
 function render() {
     app.innerHTML = ''
