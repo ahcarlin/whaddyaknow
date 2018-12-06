@@ -39,7 +39,8 @@ secondGame.questions_attributes = [{
   question: "How many fish are made of cheese?",
   correct_answer: "Moon",
   incorrect_answers: ["The color blue", "Ford Edsel", "Portugal"]
-}]
+}
+]
 
 secondGame.questions_attributes = [{
   question: "Am I full of owls?",
