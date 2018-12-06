@@ -63,8 +63,9 @@ const renderQuestionForm = (index, numQuests) => {
                 renderQuestionForm(index, numQuests)
             } else {
                 incorrectNodes = document.querySelectorAll('.incorrect')
-                question.incorrect_answers = []
-                incorrectNodes.forEach((node)=>question.incorrect_answers.push(node.value))
+                incorrect_array = []
+                incorrectNodes.forEach((node)=>incorrect_array.push(node.value))
+                question.incorrect_answers=incorrect_array.filter((inc)=>/\S/.test(inc))
                 selectedGame.questions.push(question)
                 renderQuestionForm(index+1, numQuests)
             }
