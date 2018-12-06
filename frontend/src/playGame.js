@@ -66,6 +66,7 @@ const renderNextQuestion = () => {
     renderGamePlay()
   }
   else {
+    selectedGame.average_score = updateAverageScore(selectedGame)
     selectedGame.attempts++
     updateGame(selectedGame)
     renderGameEnd()
@@ -95,6 +96,11 @@ const renderGameEnd = () => {
     })
   )
 }
+function updateAverageScore(selectedGame){
+  currentAverage = selectedGame.average_score
+  currentAttempts = selectedGame.attempts
+  return (currentAverage*currentAttempts+score)/(currentAttempts+1)
+}
 
 function updateGame(selectedGame){
     server.patch(`/games/${selectedGame.id}`, selectedGame)
@@ -108,6 +114,7 @@ const updateHighScore = () => {
   highScoreTitle.className = "title"
   highScoreForm.append(highScoreTitle)
   nameField = document.createElement('input')
+  nameField.className = 'input'
   nameField.placeholder = 'your initials'
   highScoreForm.append(
     nameField,
