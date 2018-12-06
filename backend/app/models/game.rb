@@ -5,6 +5,7 @@ class Game < ApplicationRecord
 
   def default_values
     self.high_score ||= 0
+    self.high_score_holder ||= 'AAA'
     self.average_score ||= 0
     self.attempts ||= 0
   end
