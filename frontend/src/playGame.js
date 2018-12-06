@@ -5,7 +5,7 @@ let answers = []
 let score = 0
 
 const renderGamePlay = () => {
-  app.innerHTML = ''
+  app.innerHTML = `score: ${score}`
   titleBox.innerHTML = `<h2><i class='icon star is-medium'></i> ${selectedGame.title} (playing)</h2>`
 
   // create element to display the question and append to #app
@@ -56,8 +56,10 @@ const checkAnswer = () => {
     if (e.checked) {
       if (e.nextElementSibling.innerText === selectedGame.questions[questionsIndex].correct) {
         console.log('yay')
+        score++
       }
     }
+    // alert('no')
   })
 }
 
