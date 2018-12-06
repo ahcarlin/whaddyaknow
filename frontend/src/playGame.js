@@ -21,8 +21,6 @@ const renderGamePlay = () => {
   // answers is a new array with correct and incorrect answers, then shuffle (see utils.js)
   // forEach to display each answer, they are selectable
 
-  // try to make first answer selected but not important
-  // answerBox.firstChild.firstElementChild.innerHTML = "<input type='radio' class='radio' name='answer' checked>"
   answerBox = document.createElement('section')
   answerBox.className = 'container is-rounded'
 
@@ -62,7 +60,6 @@ const checkAnswer = () => {
         score++
       }
     }
-    // alert('pls choose answer') this won't be necessary if first answer is selected by default
   })
 }
 

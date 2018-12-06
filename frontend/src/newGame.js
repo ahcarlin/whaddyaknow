@@ -35,12 +35,9 @@ const renderQuestionForm = (index, numQuests) => {
     const questionForm = document.createElement('form')
     
     doneButton = renderButton('Add random questions to the quiz', (e) => {
-        // e.preventDefault()
         finishQuestionList(numQuests - (index-1))
     })
-    // doneButton = document.createElement('button')
-    // doneButton.innerHTML = 'Add random questions to the quiz'
-
+    
     app.append(doneButton)
 
     questionForm.innerHTML += `
