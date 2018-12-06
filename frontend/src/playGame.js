@@ -2,6 +2,7 @@
 
 let questionsIndex = 0
 let answers = []
+let score = 0
 
 const renderGamePlay = () => {
   app.innerHTML = ''
@@ -19,6 +20,9 @@ const renderGamePlay = () => {
   // answerBox is a section to hold all answers
   // answers is a new array with correct and incorrect answers, then shuffle (see utils.js)
   // forEach to display each answer, they are selectable
+
+  // try to make first answer selected but not important
+  // answerBox.firstChild.firstElementChild.innerHTML = "<input type='radio' class='radio' name='answer' checked>"
   answerBox = document.createElement('section')
   answerBox.className = 'container is-rounded'
   answers = selectedGame.questions[questionsIndex].incorrect.slice()
@@ -35,18 +39,26 @@ const renderGamePlay = () => {
     answerBox.append(a)
     app.append(answerBox)
   })
+  answerBox
 
-  submitQuestionButton = document.createElement('button')
-  submitQuestionButton.innerText = 'try it'
-  submitQuestionButton.className = 'btn'
-  submitQuestionButton.addEventListener( 'click', () => console.log('read the error'))
-  app.append(submitQuestionButton)
-  // renderButton('try it', function() {
-  //   console.log('read the error')
-  // })
-  // renderButton doesn't work for me, how to append it? TODO
 
-  return '' // TODO WHAT IS SUPPOSED TO BE RETURNED? this gets rid of the 'undefined'
+  app.append(
+    renderButton('try it', function() {
+      checkAnswer()
+      renderNextQuestion()
+    }))
+
+  return '' // return score later
+}
+
+const checkAnswer = () => {
+  document.querySelectorAll('input').forEach( e => {
+    if (e.checked) {
+      if (e.nextElementSibling.innerText === selectedGame.questions[questionsIndex].correct) {
+        console.log('yay')
+      }
+    }
+  })
 }
 
 const renderNextQuestion = () => {
