@@ -46,7 +46,6 @@ const renderGamesList = function() {
 
     return renderList(
         ...games.map( function(currentGame){
-          //console.log(games)
             return renderListItem(currentGame.title, function(){
                 server.get(`/games/${currentGame.id}`)
                     .then(function(currentGame){
