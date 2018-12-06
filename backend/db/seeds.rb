@@ -6,11 +6,11 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-# Game.destroy_all
-# Question.destroy_all
+Game.destroy_all
+Question.destroy_all
 
 firstGame = Game.create({
-  title: "Trivia Thing"
+  title: "Trivia Thing 1"
 })
 
 firstGame.questions_attributes = [{
@@ -32,7 +32,7 @@ firstGame.questions_attributes = [{
 }]
 
 secondGame = Game.create({
-  title: "Trivia Thing"
+  title: "Trivia Thing 2"
 })
 
 secondGame.questions_attributes = [{

@@ -25,6 +25,7 @@ const renderGamePlay = () => {
   // answerBox.firstChild.firstElementChild.innerHTML = "<input type='radio' class='radio' name='answer' checked>"
   answerBox = document.createElement('section')
   answerBox.className = 'container is-rounded'
+
   answers = selectedGame.questions[questionsIndex].incorrect_answers.slice()
   answers.push(selectedGame.questions[questionsIndex].correct_answer)
   shuffle(answers)
