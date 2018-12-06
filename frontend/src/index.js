@@ -5,7 +5,7 @@ const server = ajax('http://localhost:3000/api/v1')
 let games = []
 let selectedGame = {questions: []}
 
-let selectedView // = 'games' changed for testing
+let selectedView 
 
 const getGames = function() {server.get('/games')
 .then(result => {
@@ -70,11 +70,6 @@ const renderSelectedGame = function(){
   titleBox.innerHTML = "<h2><i class='icon star is-medium'></i></h2>"
     let selectedGameDiv = h('div')
     selectedGameDiv.append(
-        // renderLink('Back to Games', function(){
-        //     update(function(){
-        //         selectedView = 'games'
-        //     })
-        // }),
         renderHeader(selectedGame.title),
         renderParagraph(`High Score: ${selectedGame.high_score}`),
         renderParagraph(`Average Score: ${selectedGame.average_score}`),
@@ -86,19 +81,9 @@ const renderSelectedGame = function(){
             selectedView = 'play-game'
           })
         }),
-//         renderButton('Edit', function(){
-//           update(function(){
-//             selectedView = 'game-form'
-//           })
-//         }),
-
         renderButton('Delete Game',()=> {
-
-            //games.splice(games.indexOf(selectedGame),1)
             server.delete(`/games/${selectedGame.id}`)
-            .then( getGames
-               // update(() => selectedView = 'games')
-            )
+            .then( getGames )
         }),
         renderButton('Back to Games', ()=>{
             selectedView = 'games'
