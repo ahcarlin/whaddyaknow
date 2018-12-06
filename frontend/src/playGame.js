@@ -68,6 +68,7 @@ const renderNextQuestion = () => {
     renderGamePlay()
   }
   else {
+    selectedGame.average_score = updateAverageScore(selectedGame)
     selectedGame.attempts++
     updateGame(selectedGame)
     renderGameEnd()
@@ -96,6 +97,11 @@ const renderGameEnd = () => {
       getGames
     })
   )
+}
+function updateAverageScore(selectedGame){
+  currentAverage = selectedGame.average_score
+  currentAttempts = selectedGame.attempts
+  return (currentAverage*currentAttempts+score)/(currentAttempts+1)
 }
 
 function updateGame(selectedGame){

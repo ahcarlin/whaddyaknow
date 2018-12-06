@@ -37,7 +37,7 @@ const renderQuestionForm = (index, numQuests) => {
 
     questionForm.innerHTML += `
         <div class='container with-title'>
-            <label class='title'>Question ${index}</label>
+            <label class='title'>Question ${index} of ${numQuests} </label>
             <input id='content' type='text' class='input'>
         </div>
         <div class='container with-title'>
