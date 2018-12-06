@@ -63,13 +63,19 @@ const renderQuestionForm = (index, numQuests) => {
     let question = {}
     if (index<=numQuests){
         submit = renderButton('Submit',()=>{
+            
             question.question = document.getElementById('content').value
             question.correct_answer = document.getElementById('correct').value
-            incorrectNodes = document.querySelectorAll('.incorrect')
-            question.incorrect_answers = []
-            incorrectNodes.forEach((node)=>question.incorrect_answers.push(node.value))
-            selectedGame.questions.push(question)
-            renderQuestionForm(index+1, numQuests)
+            if (question.question === '' || question.correct_answer === ''){
+                alert("A question must have a question and an answer")
+                renderQuestionForm(index, numQuests)
+            } else {
+                incorrectNodes = document.querySelectorAll('.incorrect')
+                question.incorrect_answers = []
+                incorrectNodes.forEach((node)=>question.incorrect_answers.push(node.value))
+                selectedGame.questions.push(question)
+                renderQuestionForm(index+1, numQuests)
+            }
         })
     }else{
         saveGame(selectedGame)
