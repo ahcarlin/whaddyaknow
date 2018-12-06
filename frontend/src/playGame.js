@@ -78,16 +78,26 @@ const renderGameEnd = () => {
   app.innerHTML = `
   final score: ${score}<br>
   [if high score, submit your name yay]<br>
-  [a button to play again]<br>
-  [a button to go back to all games]
   `
+  app.append(
+    renderButton('play again', () => {
+      questionsIndex = 0
+      score = 0
+      answers = []
+      renderGamePlay()
+    }),
+    renderButton('back to all games', () => {
+      selectedView = 'games'
+      render()
+    })
+  )
   if (score > selectedGame.high_score) {
     selectedGame.high_score = score;
     // save to database
     // render high_score_form to accept initials
   }
   else {
-    // joe disapproval face
+    console.log('joe disapproval face')
   }
   // selectedGame.attempts++ save to database
   // selectedGame.high_score save to database
