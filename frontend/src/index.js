@@ -76,19 +76,24 @@ const renderSelectedGame = function(){
         renderParagraph(`Attempts: ${selectedGame.attempts}`),
         renderParagraph(`Number of Questions: ${selectedGame.questions.length}`),
         h('br'),
-        renderButton('<i class="nes-logo"></i> Play', function(){
-          update(function(){
+        
+        )
+        playButton = renderButton('<i class="nes-logo"></i> Play', function(){
+            update(function(){
             selectedView = 'play-game'
-          })
-        }),
-        renderButton('<i class="icon close"></i> Delete Game',()=> {
+            })
+        })
+        playButton.setAttribute('class','btn is-success')
+
+        deleteButton = renderButton('<i class="icon close"></i> Delete Game',()=> {
             server.delete(`/games/${selectedGame.id}`)
             .then( getGames )
-        }),
+        })
+        deleteButton.setAttribute('class','btn is-error')
 
-        renderButton('<i class="icon star"></i> Back to Games', getGames)
+        backButton = renderButton('<i class="icon star"></i> Back to Games', getGames)
 
-    )
+        selectedGameDiv.append(playButton, deleteButton, backButton)
     return selectedGameDiv
 }
 
