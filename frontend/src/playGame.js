@@ -54,7 +54,7 @@ const checkAnswer = () => {
   document.querySelectorAll('input').forEach( e => {
     if (e.checked) {
       if (e.nextElementSibling.innerText === selectedGame.questions[questionsIndex].correct_answer) {
-        score++
+        score = score + 10
       }
     }
   })
