@@ -70,11 +70,6 @@ const renderSelectedGame = function(){
   titleBox.innerHTML = "<h2><i class='icon star is-medium'></i></h2>"
     let selectedGameDiv = h('div')
     selectedGameDiv.append(
-        // renderLink('Back to Games', function(){
-        //     update(function(){
-        //         selectedView = 'games'
-        //     })
-        // }),
         renderHeader(selectedGame.title),
         renderParagraph(`High Score: ${selectedGame.high_score}`),
         renderParagraph(`Average Score: ${selectedGame.average_score}`),
@@ -93,17 +88,11 @@ const renderSelectedGame = function(){
 //         }),
 
         renderButton('Delete Game',()=> {
-
-            //games.splice(games.indexOf(selectedGame),1)
             server.delete(`/games/${selectedGame.id}`)
             .then( getGames
-               // update(() => selectedView = 'games')
             )
         }),
-        renderButton('Back to Games', ()=>{
-            selectedView = 'games'
-            render()
-        })
+        renderButton('Back to Games', ()=>getGames())
     )
     return selectedGameDiv
 }

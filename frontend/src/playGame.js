@@ -46,7 +46,6 @@ const renderGamePlay = () => {
 
   app.append(
     renderButton('try it', function() {
-      console.log(questionsIndex)
       checkAnswer()
       renderNextQuestion()
     }))
