@@ -57,11 +57,9 @@ const checkAnswer = () => {
   document.querySelectorAll('input').forEach( e => {
     if (e.checked) {
       if (e.nextElementSibling.innerText === selectedGame.questions[questionsIndex].correct_answer) {
-        console.log('yay')
         score++
       }
     }
-    // alert('pls choose answer') this won't be necessary if first answer is selected by default
   })
 }
 
@@ -71,15 +69,20 @@ const renderNextQuestion = () => {
     renderGamePlay()
   }
   else {
+    selectedGame.attempts++
+    updateGame(selectedGame)
     renderGameEnd()
   }
 }
 
 const renderGameEnd = () => {
   app.innerHTML = `
-  final score: ${score}<br><br>
-  [if high score, submit your name yay]<br>
+  Final Score: ${score}<br><br>
+  Attempts: ${selectedGame.attempts}<br>
   `
+  if (score > selectedGame.high_score) {
+    updateHighScore()
+  }
   app.append(
     renderButton('play again', () => {
       questionsIndex = 0
@@ -92,14 +95,29 @@ const renderGameEnd = () => {
       render()
     })
   )
-  if (score > selectedGame.high_score) {
-    selectedGame.high_score = score;
-    // save to database
-    // render high_score_form to accept initials
-  }
-  else {
-    console.log('joe disapproval face')
-  }
-  // selectedGame.attempts++ save to database
-  // selectedGame.high_score save to database
+}
+
+function updateGame(selectedGame){
+    server.patch(`/games/${selectedGame.id}`, selectedGame)
+}
+
+const updateHighScore = () => {
+  console.log('hi THIS IS RUNNING UPDATE HIGH SCORE OK')
+  highScoreForm = document.createElement('form')
+  highScoreForm.className = 'container is-rounded'
+
+  //highScoreForm = document.createElement('section')
+
+  nameField = document.createElement('input')
+  nameField.placeholder = 'your name'
+  highScoreForm.append(
+    nameField,
+    renderButton('save', () => {
+      selectedGame.high_score = score;
+      selectedGame.high_score_holder = nameField.value
+      updateGame(selectedGame)
+    })
+  )
+  app.append(highScoreForm)
+
 }

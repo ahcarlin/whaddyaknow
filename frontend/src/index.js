@@ -7,6 +7,11 @@ let selectedGame = {questions: []}
 
 let selectedView // = 'games' changed for testing
 
+document.querySelector('h1').addEventListener('click', e => {
+  selectedView = 'games'
+  render()
+})
+
 const getGames = function() {server.get('/games')
 .then(result => {
     update(() => {
@@ -41,6 +46,7 @@ const renderGamesList = function() {
 
     return renderList(
         ...games.map( function(currentGame){
+          //console.log(games)
             return renderListItem(currentGame.title, function(){
                 server.get(`/games/${currentGame.id}`)
                     .then(function(currentGame){
@@ -70,13 +76,9 @@ const renderSelectedGame = function(){
   titleBox.innerHTML = "<h2><i class='icon star is-medium'></i></h2>"
     let selectedGameDiv = h('div')
     selectedGameDiv.append(
-        // renderLink('Back to Games', function(){
-        //     update(function(){
-        //         selectedView = 'games'
-        //     })
-        // }),
         renderHeader(selectedGame.title),
         renderParagraph(`High Score: ${selectedGame.high_score}`),
+        renderParagraph(`High Score Holder: ${selectedGame.high_score_holder}`),
         renderParagraph(`Average Score: ${selectedGame.average_score}`),
         renderParagraph(`Attempts: ${selectedGame.attempts}`),
         renderParagraph(`Number of Questions: ${selectedGame.questions.length}`),
