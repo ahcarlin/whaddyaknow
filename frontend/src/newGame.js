@@ -133,6 +133,7 @@ function finishQuestionList(num){
 
 function saveGame(selectedGame){
     console.log('saving game')
+    selectedGame.questions_attributes = selectedGame.questions
     server.post('/games', selectedGame)
     .then(function(){
         update(function () {
