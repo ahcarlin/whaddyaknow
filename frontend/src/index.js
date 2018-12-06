@@ -45,6 +45,9 @@ function render() {
         case 'play-game':
         app.append( renderGamePlay() )
         break;
+        case 'edit-game':
+        app.append ( renderEditGame() )
+        break;
     }
 
 }
@@ -109,9 +112,17 @@ const renderSelectedGame = function(){
         })
         deleteButton.setAttribute('class','btn is-error')
 
+        editButton = renderButton('<i class="snes-logo"></i> Edit Game', () => {
+            update(function(){
+            selectedView = 'edit-game'
+            })
+        })
+
+        editButton.className = "btn is-primary"
+
         backButton = renderButton('<i class="icon star"></i> Back to Games', getGames)
 
-        selectedGameDiv.append(playButton, deleteButton, backButton)
+        selectedGameDiv.append(playButton, deleteButton, editButton, backButton)
     return selectedGameDiv
 }
 
