@@ -40,8 +40,6 @@ const renderGamePlay = () => {
     app.append(answerBox)
   })
   answerBox.firstElementChild.firstElementChild.firstElementChild.checked = true
-  answerBox
-
 
   app.append(
     renderButton('try it', function() {
@@ -105,7 +103,7 @@ function updateGame(selectedGame){
 const updateHighScore = () => {
   highScoreForm = document.createElement('form')
   highScoreForm.className = 'container with-title'
-  highScoreTitle = document.createElement('h3') 
+  highScoreTitle = document.createElement('h3')
   highScoreTitle.innerHTML = "New High Score! Please enter initials"
   highScoreTitle.className = "title"
   highScoreForm.append(highScoreTitle)
@@ -119,9 +117,9 @@ const updateHighScore = () => {
       updateGame(selectedGame)
     })
   )
-  nameField.addEventListener('input', e => {
-    if(e.target.value.length > 3) {
-      alert('must be < 3 characters to save')
+  nameField.addEventListener('keydown', e => {
+    if(e.target.value.length >= 3) {
+      e.preventDefault()
     }
   })
   app.append(highScoreForm)
