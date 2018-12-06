@@ -34,11 +34,14 @@ const renderQuestionForm = (index, numQuests) => {
     app.innerHTML = ''
     const questionForm = document.createElement('form')
     
-    // doneButton = renderButton('Add random questions to the quiz', (e) => {
-    //     e.preventDefault()
-    //     finishQuestionList(numQuests - (index-1))
-    // })
-    // questionForm.append(doneButton)
+    doneButton = renderButton('Add random questions to the quiz', (e) => {
+        // e.preventDefault()
+        finishQuestionList(numQuests - (index-1))
+    })
+    // doneButton = document.createElement('button')
+    // doneButton.innerHTML = 'Add random questions to the quiz'
+
+    app.append(doneButton)
 
     questionForm.innerHTML += `
         <div class='container is-rounded with-title'>
@@ -140,6 +143,7 @@ function finishQuestionList(num){
 
 function saveGame(selectedGame){
     selectedGame.questions_attributes = selectedGame.questions
+    games.push(selectedGame)
     server.post('/games', selectedGame)
     .then(function(){
         console.log('saving game', selectedGame)
