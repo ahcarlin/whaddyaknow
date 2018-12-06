@@ -85,10 +85,12 @@ const renderSelectedGame = function(){
             server.delete(`/games/${selectedGame.id}`)
             .then( getGames )
         }),
+
         renderButton('<i class="icon star"></i> Back to Games', ()=>{
             selectedView = 'games'
             render()
         })
+
     )
     return selectedGameDiv
 }
