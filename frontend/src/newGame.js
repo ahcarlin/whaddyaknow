@@ -18,13 +18,13 @@ const renderGameForm = () => {
         selectedGame.title = document.getElementById('title').value
         selectedGame.numQuests = document.getElementById('numOfQuestions').value
         selectedGame.category = document.getElementById('categoryQuestions').value
-        selectedGame.high_score_holder = 'NIL'
+        selectedGame.high_score_holder = 'AAA'
         selectedGame.high_score = 0
         selectedGame.attempts = 0
         selectedGame.questions = []
         renderQuestionForm(1,selectedGame.numQuests)
     })
-    exit = renderButton('Exit', renderGamesList)
+    const exit = renderButton('Exit', renderGamesList)
 
     gameForm.append(submit, exit)
     return gameForm
@@ -33,7 +33,14 @@ const renderGameForm = () => {
 const renderQuestionForm = (index, numQuests) => {
     app.innerHTML = ''
     const questionForm = document.createElement('form')
-    questionForm.innerHTML = `
+    
+    // doneButton = renderButton('Add random questions to the quiz', (e) => {
+    //     e.preventDefault()
+    //     finishQuestionList(numQuests - (index-1))
+    // })
+    // questionForm.append(doneButton)
+
+    questionForm.innerHTML += `
         <div class='container is-rounded with-title'>
             <label class='title'>Question ${index}</label>
             <input id='content' type='text' class='input'>
@@ -55,7 +62,7 @@ const renderQuestionForm = (index, numQuests) => {
     let question = {}
     if (index<=numQuests){
         submit = renderButton('Submit',()=>{
-            question.content = document.getElementById('content').value
+            question.question = document.getElementById('content').value
             question.correct_answer = document.getElementById('correct').value
             incorrectNodes = document.querySelectorAll('.incorrect')
             question.incorrect_answers = []
@@ -67,10 +74,9 @@ const renderQuestionForm = (index, numQuests) => {
         saveGame(selectedGame)
     }
 
-    doneButton = renderButton('Done',(e)=>{
-        finishQuestionList(numQuests-index)        
-    })
-    questionForm.append(submit, doneButton)
+    const exit = renderButton('Exit', renderGamesList)
+
+    questionForm.append(submit, exit)
     app.append(questionForm)
 }
 
@@ -126,16 +132,17 @@ function finishQuestionList(num){
                 questions.forEach((question) => selectedGame.questions.push(question))
                 saveGame(selectedGame)
             })
-    })    
+    })   
+ 
     apiQueryForm.append(addQuestionsButton)
     app.append(apiQueryForm)
 }
 
 function saveGame(selectedGame){
-    console.log('saving game')
     selectedGame.questions_attributes = selectedGame.questions
     server.post('/games', selectedGame)
     .then(function(){
+        console.log('saving game', selectedGame)
         update(function () {
             selectedView = 'game'
         })
