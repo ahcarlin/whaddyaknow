@@ -100,12 +100,16 @@ function updateGame(selectedGame){
 const updateHighScore = () => {
   console.log('hi THIS IS RUNNING UPDATE HIGH SCORE OK')
   highScoreForm = document.createElement('form')
-  highScoreForm.className = 'container is-rounded'
+  highScoreForm.className = 'container with-title'
+  highScoreTitle = document.createElement('h3') 
+  highScoreTitle.innerHTML = "New High Score! Please enter initials"
+  highScoreTitle.className = "title"
+  highScoreForm.append(highScoreTitle)
 
   //highScoreForm = document.createElement('section')
 
   nameField = document.createElement('input')
-  nameField.placeholder = 'your name'
+  nameField.placeholder = 'your initials'
   highScoreForm.append(
     nameField,
     renderButton('save', () => {
