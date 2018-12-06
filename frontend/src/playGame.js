@@ -39,6 +39,7 @@ const renderGamePlay = () => {
     answerBox.append(a)
     app.append(answerBox)
   })
+  answerBox.firstElementChild.firstElementChild.firstElementChild.checked = true  
   answerBox
 
 
