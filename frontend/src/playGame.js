@@ -82,17 +82,17 @@ const renderGameEnd = () => {
     updateHighScore()
   }
   app.append(
-    renderButton('play again', () => {
+    renderButton('<i class="nes-logo"></i> Play Again?', () => {
       questionsIndex = 0
       score = 0
       answers = []
       renderGamePlay()
     }),
-    renderButton('back to all games', () => {
+    renderButton('<i class="icon star"></i> Back to Games', () => {
       questionsIndex = 0
       score = 0
       answers = []
-      getGames
+      getGames()
     })
   )
 }
@@ -115,20 +115,23 @@ const updateHighScore = () => {
   highScoreForm.append(highScoreTitle)
   nameField = document.createElement('input')
   nameField.className = 'input'
+  nameField.setAttribute('maxlength', '3')
   nameField.placeholder = 'your initials'
   highScoreForm.append(
     nameField,
-    renderButton('save', () => {
+    renderButton('save', (e) => {
+      e.preventDefault()
       selectedGame.high_score = score;
       selectedGame.high_score_holder = nameField.value
       updateGame(selectedGame)
+      renderGameEnd()
     })
   )
-  nameField.addEventListener('keydown', e => {
-    if(e.target.value.length >= 3) {
-      e.preventDefault()
-    }
-  })
+  // nameField.addEventListener('keydown', e => {
+  //   if(e.target.value.length >= 3) {
+  //     e.preventDefault()
+  //   }
+  // })
   app.append(highScoreForm)
 
 }
