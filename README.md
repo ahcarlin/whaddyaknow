@@ -21,7 +21,7 @@ Build a trivia contest that asks whatever questions you want! Or, if you can't t
 
 ### How we'd make this better
 
-1. Serve this online. We, the project developers ([Hannah](https://github.com/ch0mper), [Alex])https://github.com/AHCarl), and [Eddie](https://github.com/no-relation) tried to get this project hosted on Heroku, but were thwarted at every turn. We had a hard deadline on this and couldn't spend the whole week wrestling with free web service providers.
+1. Serve this online. We, the project developers ([Hannah](https://github.com/ch0mper), [Alex](https://github.com/AHCarl), and [Eddie](https://github.com/no-relation) tried to get this project hosted on Heroku, but were thwarted at every turn. We had a hard deadline on this and couldn't spend the whole week wrestling with free web service providers.
 
 2. Serving the questions on the backend. As it is, questions and answers are visible in the console (really though, you're just cheating yourself); if we wanted to be taken seriously, we'd have it so the correct answer wasn't queried from the backend until the user commits to an answer to the question. 
 
