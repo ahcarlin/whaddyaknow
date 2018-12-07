@@ -9,9 +9,19 @@ h1 {
 
 button {
     margin: 10px;
-    cursor: pointer
+    cursor: pointer;
 }
 
 li {
   cursor: pointer
+}
+
+body {
+    background: center fixed;
+    background-image: url('8BB.png');
+    background-size: cover;
+}
+
+.is-rounded {
+    background-color: #ffffff;
 }

@@ -2,8 +2,9 @@ const renderGameForm = () => {
     titleBox.innerHTML = "<h2><i class='icon star is-medium'></i>Create A Game</h2>"
     const gameForm = document.createElement('form')
     gameForm.innerHTML = `
-        <div class='container is-rounded'>
-            <input id='title' type='text' placeholder="Title" class='input'>
+        <div class='container with-title'>
+            <label class='title'>What's the title?</label>
+            <input id='title' type='text' placeholder="title" class='input'>
         </div>
         <div class='container with-title'>
             <label class='title'>How many questions?</label>
