@@ -1,4 +1,17 @@
-# whaddyaknow
+#Whaddya Know?
+##A customizable trivia game, powered by [Open Trivia DB.](https://opentdb.com/)
+---
+###Installation
+##Server
+1. Clone the repo into your directory of choice. 
+
+2. In your terminal, navigate to `<DIRECTORY_OF_CHOICE>/whaddyaknow/backend`, then run `rails s` to start the server.
+
+   You may need to open and run a Postgres database as well.
+   
+##In your browser of choice, go to the URL <<DIRECTORY_OF_CHOICE>/whaddyaknow/frontend/index.html>
+
+<!-- # whaddyaknow
 
 #MVP
 * visitor can create games consisting of up to 30 questions
@@ -22,5 +35,4 @@
  * CSS styling (NES CSS?)
  * sound effects
  * weighted scoring (more points for more difficult questions)
- * user can request multiple question categories from API
-
+ * user can request multiple question categories from API-->
