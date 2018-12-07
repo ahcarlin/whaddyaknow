@@ -3,11 +3,11 @@ const renderGameForm = () => {
     const gameForm = document.createElement('form')
     gameForm.innerHTML = `
         <div class='container is-rounded'>
-            <input id='title' type='text' placeholder="Title" class='input'value=''>
+            <input id='title' type='text' placeholder="Title" class='input'>
         </div>
-        <div class='container is-rounded with-title'>
+        <div class='container with-title'>
             <label class='title'>How many questions?</label>
-            <input id='numOfQuestions' type='number' class='input' placeholder="15" value='15'>
+            <input id='numOfQuestions' type='number' class='input' placeholder="number of questions">
         </div>
         `
     submit = renderButton('Submit', ()=>{
@@ -36,15 +36,15 @@ const renderQuestionForm = (index, numQuests) => {
     app.append(doneButton)
 
     questionForm.innerHTML += `
-        <div class='container is-rounded with-title'>
-            <label class='title'>Question ${index}</label>
+        <div class='container with-title'>
+            <label class='title'>Question ${index} of ${numQuests} </label>
             <input id='content' type='text' class='input'>
         </div>
-        <div class='container is-rounded with-title'>
+        <div class='container with-title'>
             <label class='title'>Correct answer</label>
             <input id='correct' type='text' class='input'>
         </div>
-        <div class='container is-rounded with-title'>
+        <div class='container with-title'>
             <label class='title'>Incorrect Answers</label>
             <input class='incorrect input' type='text'>
             <input class='incorrect input' type='text'>
@@ -63,8 +63,9 @@ const renderQuestionForm = (index, numQuests) => {
                 renderQuestionForm(index, numQuests)
             } else {
                 incorrectNodes = document.querySelectorAll('.incorrect')
-                question.incorrect_answers = []
-                incorrectNodes.forEach((node)=>question.incorrect_answers.push(node.value))
+                incorrect_array = []
+                incorrectNodes.forEach((node)=>incorrect_array.push(node.value))
+                question.incorrect_answers=incorrect_array.filter((inc)=>/\S/.test(inc))
                 selectedGame.questions.push(question)
                 renderQuestionForm(index+1, numQuests)
             }
@@ -83,7 +84,7 @@ function finishQuestionList(num){
     app.innerHTML = '<p>Querying the Open Trivia Database</p>'
     apiQueryForm = document.createElement('form')
     apiQueryForm.innerHTML = `
-        <div class='container is-rounded with-title'>
+        <div class='container with-title'>
             <label class='title'>What difficulty of questions?</label>
             <select id='difficulty'>
                 <option value='' selected>Any</option>
@@ -92,7 +93,7 @@ function finishQuestionList(num){
                 <option value='hard'>Hard</option>
             </select>
         </div>
-        <div class='container is-rounded with-title'>
+        <div class='container with-title'>
             <label class='title'>What kind of questions?</label>
             <select id='type'>
                 <option value=''>Any</option>
@@ -102,8 +103,8 @@ function finishQuestionList(num){
         </div>
     `
     categorySelectorsDiv = document.createElement('div')
-    categorySelectorsDiv.setAttribute('class','container is-rounded with-title')
-    categorySelectorsDiv.inneHTML = "<label class='title'>What category?</label>"
+    categorySelectorsDiv.setAttribute('class','container with-title')
+    categorySelectorsDiv.innerHTML = "<label class='title'>What category?</label>"
 
     categorySelectors = document.createElement('select')
     categorySelectors.setAttribute('id','category')
@@ -141,11 +142,6 @@ function saveGame(selectedGame){
     selectedGame.questions_attributes = selectedGame.questions
     games.push(selectedGame)
     server.post('/games', selectedGame)
-    .then(function(){
-        console.log('saving game', selectedGame)
-        update(function () {
-            selectedView = 'game'
-        })
-    })
+    .then((result)=>getSelectedGame(result))
 }
 

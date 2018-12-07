@@ -7,19 +7,28 @@ let selectedGame = {questions: []}
 
 let selectedView
 
-document.querySelector('h1').addEventListener('click', e => {
-  selectedView = 'games'
-  render()
-})
 
 const getGames = function() {server.get('/games')
 .then(result => {
     update(() => {
         games = result
         selectedView = 'games'
-        })
     })
+})
 }
+
+const getSelectedGame = function(game) {server.get(`/games/${game.id}`)
+.then(result => {
+    update(() => {
+        selectedGame = result
+        selectedView = 'game'
+    })
+})
+}
+
+
+
+document.querySelector('h1').addEventListener('click', getGames)
 
 function render() {
     app.innerHTML = ''
@@ -35,6 +44,9 @@ function render() {
         break;
         case 'play-game':
         app.append( renderGamePlay() )
+        break;
+        case 'edit-game':
+        app.append ( renderEditGame() )
         break;
     }
 
@@ -85,19 +97,32 @@ const renderSelectedGame = function(){
         renderParagraph(`Attempts: ${selectedGame.attempts}`),
         renderParagraph(`Number of Questions: ${selectedGame.questions.length}`),
         h('br'),
-        renderButton('<i class="nes-logo"></i> Play', function(){
-          update(function(){
+        
+        )
+        playButton = renderButton('<i class="nes-logo"></i> Play', function(){
+            update(function(){
             selectedView = 'play-game'
-          })
-        }),
-        renderButton('<i class="icon close"></i> Delete Game',()=> {
+            })
+        })
+        playButton.setAttribute('class','btn is-success')
+
+        deleteButton = renderButton('<i class="icon close"></i> Delete Game',()=> {
             server.delete(`/games/${selectedGame.id}`)
             .then( getGames )
-        }),
+        })
+        deleteButton.setAttribute('class','btn is-error')
 
-        renderButton('<i class="icon star"></i> Back to Games', getGames)
+        editButton = renderButton('<i class="snes-logo"></i> Edit Game', () => {
+            update(function(){
+            selectedView = 'edit-game'
+            })
+        })
 
-    )
+        editButton.className = "btn is-primary"
+
+        backButton = renderButton('<i class="icon star"></i> Back to Games', getGames)
+
+        selectedGameDiv.append(playButton, deleteButton, editButton, backButton)
     return selectedGameDiv
 }
 
