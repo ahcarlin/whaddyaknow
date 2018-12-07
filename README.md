@@ -15,7 +15,7 @@ Build a trivia contest that asks whatever questions you want! Or, if you can't t
 
    You may need to open and run a Postgres database as well.
    
-3. In your browser of choice, go to the URL <file:///Users/DIRECTORY_OF_CHOICE/whaddyaknow/frontend/index.html>
+3. In your browser of choice, go to the URL <file:///DIRECTORY_OF_CHOICE/whaddyaknow/frontend/index.html>
 
 ---
 
