@@ -55,6 +55,7 @@ function render() {
 
 const renderGamesList = function() {
   titleBox.innerHTML = "<h2><i class='icon star is-medium'></i> All Games</h2>"
+  questionsIndex = 0
   games.sort(function(a, b) {
     return a.id - b.id;
   });
@@ -88,6 +89,7 @@ const renderGamesList = function() {
 
 const renderSelectedGame = function(){
   titleBox.innerHTML = ``
+  questionsIndex = 0
     let selectedGameDiv = h('div')
     selectedGameDiv.append(
         renderHeader(selectedGame.title),
@@ -97,7 +99,7 @@ const renderSelectedGame = function(){
         renderParagraph(`Attempts: ${selectedGame.attempts}`),
         renderParagraph(`Number of Questions: ${selectedGame.questions.length}`),
         h('br'),
-        
+
         )
         playButton = renderButton('<i class="nes-logo"></i> Play', function(){
             update(function(){
