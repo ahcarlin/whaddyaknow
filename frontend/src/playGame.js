@@ -116,7 +116,7 @@ const updateHighScore = () => {
   nameField = document.createElement('input')
   nameField.className = 'input'
   nameField.setAttribute('maxlength', '3')
-  nameField.placeholder = 'your initials'
+  nameField.placeholder = 'AAA'
   highScoreForm.append(
     nameField,
     renderButton('save', (e) => {
