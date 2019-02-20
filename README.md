@@ -5,6 +5,8 @@
  
 Build a trivia contest that asks whatever questions you want! Or, if you can't think of anything, leverage the power of the Open Trivia database to add up to 50 questions of varying difficulty, from books to video games, sports to manga. Challenge your friends to beat your high score!
 
+![](trivia.gif)
+
 ---
 
 ### Installation
